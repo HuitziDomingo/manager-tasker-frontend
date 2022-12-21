@@ -1,10 +1,24 @@
-import React from 'react'
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import AuthLayout from "./layouts/AuthLayout"
+import ConfirmAccount from "./pages/ConfirmAccount"
+import ForgetPass from "./pages/ForgetPass"
+import Login from "./pages/Login"
+import NewPass from "./pages/NewPass"
+import Register from "./pages/Register"
 
 const App = () => {
   return (
-    <div>
-      <h3>Hola con Tailwind</h3>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<AuthLayout />} >
+          <Route index element={<Login />} />
+          <Route path="registrar" element={<Register />} />
+          <Route path="olvide-password" element={<ForgetPass />} />
+          <Route path="olvide-password/:token" element={<NewPass />} />
+          <Route path="olvide-password/:id" element={<ConfirmAccount />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
