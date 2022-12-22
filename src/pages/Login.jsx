@@ -1,7 +1,14 @@
-import React from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const Login = () => {
+
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPasswor] = useState('')
+  const [repitPassword, setRepitPassword] = useState('')
+
+
   return (
     <>
       <h1 className='text-sky-600 font-black text-6xl capitalize'>
