@@ -47,7 +47,7 @@ const Login = () => {
           className='block text-center my-5 text-slate-500 uppercase text-sm'
           to="registrar"
         >
-          No tienes una cuenta aun ? Registrate
+          No tienes una cuenta aun? Registrate
         </Link>
 
         <Link
