@@ -13,10 +13,8 @@ const ConfirmAccount = () => {
   useEffect(() => {
     const confirmAccount = async () => {
       try {
-        
         let url = `http://localhost:4000/api/users/login/${id}`
         let { data } = await axios(url)
-        console.log(data)
         
         setAlert({
           message: data.message,
@@ -29,7 +27,6 @@ const ConfirmAccount = () => {
           message: error.response.data.message,
           error: true,
         })
-        console.log('no')
       }
     }
     confirmAccount()
@@ -43,8 +40,7 @@ const ConfirmAccount = () => {
         Confirma tu cuenta y comienza a crear tus proyectos
         <span className='text-slate-700'> proyectos.</span>
       </h1>
-      <div>
-        
+      <div className="mt-20 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">
         {message && <Alert alert={alert} />}
 
         {confirmationAccount && (

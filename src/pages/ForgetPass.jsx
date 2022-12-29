@@ -1,13 +1,44 @@
-import { Link } from "react-router-dom"
+import { useState } from "react"
+import { Link, useParams } from "react-router-dom"
+import Alert from '../components/Alert'
+import axios from "axios"
 
 const ForgetPass = () => {
+
+  const [alert, setAlert] = useState({})
+  const [email, setEmail] = useState('')
+
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+
+    if (!email || email === '') {
+      setAlert({
+        error: true,
+        message: 'El email es obligatorio'
+      })
+      return
+    }
+    try {
+      let { data } =
+        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/login/forget-password/`,
+          { email })
+      setAlert({ error: false, message: data.message })
+    } catch (error) {
+      setAlert({ error: true, message: error.response.data.message })
+    }
+  }
+
+  const { message } = alert
+
   return (
     <>
       <h1 className='text-sky-600 font-black text-6xl capitalize'>
-        Recupera tu acceso y no pierdas tus 
+        Recupera tu acceso y no pierdas tus
         <span className='text-slate-700'> proyectos.</span>
       </h1>
-      <form className='my-10 bg-white shadow rounded-lg px-10 py-10'>
+      {message && <Alert alert={alert} />}
+      <form onSubmit={handleSubmit} className='my-10 bg-white shadow rounded-lg px-10 py-10'>
         <div>
           <label
             className='uppercase text-gray-600 block text-xl font-bold mt-3'
@@ -19,6 +50,8 @@ const ForgetPass = () => {
             type="email"
             placeholder="Email de registro"
             className='w-full mt-3 p-3 border rounded-xl bg-gray-50'
+            onChange={e => setEmail(e.target.value)}
+            value={email}
           />
         </div>
 
@@ -28,6 +61,8 @@ const ForgetPass = () => {
         '
         >Enviar instrucciones</button>
       </form>
+
+
 
       <nav className='lg:flex lg:justify-between'>
         <Link
