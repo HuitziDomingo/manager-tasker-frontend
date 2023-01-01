@@ -1,13 +1,25 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import clientAxios from '../config/clientAxios'
+import Alert from '../components/Alert'
 
 const Login = () => {
 
-  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPasswor] = useState('')
-  const [repitPassword, setRepitPassword] = useState('')
+  const [alert, setAlert] = useState({})
 
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    if ([email, password].includes('')) {
+      setAlert({ error: true, message: 'Todos los campos son obligatorios' })
+      return
+    }
+
+  }
+
+  const { message } = alert
 
   return (
     <>
@@ -15,7 +27,11 @@ const Login = () => {
         Inicia sesion y administra tus
         <span className='text-slate-700'> proyectos.</span>
       </h1>
-      <form className='my-10 bg-white shadow rounded-lg px-10 py-10'>
+      {message && <Alert alert={alert} />}
+      <form
+        onSubmit={handleSubmit}
+        className='my-10 bg-white shadow rounded-lg px-10 py-10'
+      >
         <div>
           <label
             className='uppercase text-gray-600 block text-xl font-bold'
@@ -27,6 +43,8 @@ const Login = () => {
             type="email"
             placeholder="Email de registro"
             className='w-full mt-3 p-3 border rounded-xl bg-gray-50'
+            value={email}
+            onChange={e => setEmail(e.target.value)}
           />
         </div>
         <div>
@@ -40,6 +58,8 @@ const Login = () => {
             type="password"
             placeholder="Clave"
             className='w-full mt-3 p-3 border rounded-xl bg-gray-50'
+            value={password}
+            onChange={e => setPasswor(e.target.value)}
           />
         </div>
         <button className='
